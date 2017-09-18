@@ -6,12 +6,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 
 import static javafx.scene.input.KeyCode.ENTER;
@@ -77,6 +76,15 @@ public class Controller {
     }
 
     public void sendMessage(ActionEvent actionEvent) {
+        Stage stage = new Stage();
+        File file;
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        file = fileChooser.showOpenDialog(stage);
+
+
+        System.out.println(file.getAbsoluteFile());
+        System.out.println(file.hashCode());
     }
 
 }
