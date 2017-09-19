@@ -7,12 +7,15 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
+<?import javafx.scene.layout.FlowPane?>
+<BorderPane xmlns="http://javafx.com/javafx/8.0.111"
+            xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ru.smeleyka.myfilebox.client.Controller">
 
     <top>
         <HBox alignment="CENTER" BorderPane.alignment="CENTER">
-            <TextField promptText="user" HBox.hgrow="ALWAYS" fx:id="textField"/>
+            <TextField promptText="user" HBox.hgrow="ALWAYS" fx:id="textFieldUser"/>
+            <TextField promptText="password" HBox.hgrow="ALWAYS" fx:id="textFieldPassword"/>
             <Button text="LogIn" fx:id="loginButton" onAction="#loginAction"/>
             <padding>
                 <Insets bottom="10.0"/>
@@ -25,10 +28,11 @@
         </TextArea>
     </center>
 
-    <bottom>
+    <bottom><FlowPane>
         <Button text="RECEIVE" fx:id="receiveButton" onAction="#recieveMessage"/>
         <Button text="SEND" fx:id="sendButton" onAction="#sendMessage"/>
-
+        <Button text="OPEN FILE" fx:id="openFileButton" onAction="#openFile"/>
+        </FlowPane>
     </bottom>
 
     <padding>
