@@ -19,7 +19,7 @@ public class ClientHandler implements Runnable {
     AbstractMessage mess;
 
 
-    public ClientHandler(Server server,Socket socket) throws Exception{
+    public ClientHandler(Server server, Socket socket) throws Exception {
         this.socket = socket;
         this.server = server;
         obOut = new ObjectOutputStream(socket.getOutputStream());
@@ -28,30 +28,29 @@ public class ClientHandler implements Runnable {
     @Override
     public void run() {
         System.out.printf("Client Handler Started");
-        while (true){
-            try {
-                obIn = new ObjectInputStream(socket.getInputStream());
+        try {
+            obIn = new ObjectInputStream(socket.getInputStream());
+
+            while (true) {
+
                 Object obj = obIn.readObject();
                 messageHandler(obj);
-                obIn.available();
 
-
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
             }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
         }
 
-
-
     }
-    public void messageHandler (Object obj){
-        if(obj instanceof TextDataMessage){
+
+    public void messageHandler(Object obj) {
+        if (obj instanceof TextDataMessage) {
             TextDataMessage textmessage = (TextDataMessage) obj;
             System.out.println(textmessage.getCommand());
-        };
+        }
+        ;
     }
 }

@@ -19,10 +19,11 @@ public class Server {
 
         try {
             ServerSocket serverSocket = new ServerSocket(SERVER_PORT);
-            Socket socket = serverSocket.accept();
-            System.out.println("Client Connected");
-           new Thread(new ClientHandler(this,socket)).start();
-
+           while (true) {
+               Socket socket = serverSocket.accept();
+               System.out.println("Client Connected");
+               new Thread(new ClientHandler(this, socket)).start();
+           }
 //            BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 //            OutputStreamWriter os = new OutputStreamWriter(socket.getOutputStream());
 //            while(true) {

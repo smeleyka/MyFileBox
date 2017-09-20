@@ -17,7 +17,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class Controller{
+public class Controller {
     private static final String SERVER_IP = "127.0.0.1";
     private static final int SERVER_PORT = 2017;
     private Socket socket;
@@ -37,34 +37,30 @@ public class Controller{
         System.out.println("Controller");
         try {
             socket = new Socket(SERVER_IP, SERVER_PORT);
-            //obIn = new ObjectInputStream(socket.getInputStream());
-            //obOut = new ObjectOutputStream(socket.getOutputStream());
-            DataInputStream dis = new DataInputStream(socket.getInputStream());
-            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+
+//            DataInputStream dis = new DataInputStream(socket.getInputStream());
+//            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
 
             System.out.println("Before Thread");
 
-//            new Thread(new Runnable() {
-//                @Override
-//                public void run() {
-//                    System.out.println("Thread");
-//                    BufferedReader br = null;
-//                    try {
-//                        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//                        while (true) {
-//                            String s = br.readLine();
-//                            if (s != null) {
-//                                textArea.appendText(s + "\n");
-//                            }
-//                        }
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//            }).start();
-            System.out.println("Thread Started");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("Thread");
+                    try {
+                        //obIn = new ObjectInputStream(socket.getInputStream());
+                        obOut = new ObjectOutputStream(socket.getOutputStream());
 
+                        while (true) {
+
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }).start();
+            System.out.println("Thread Started");
 
 
         } catch (IOException e) {
@@ -87,17 +83,16 @@ public class Controller{
 
     }
 
-    public void sendMessage(ActionEvent actionEvent) throws Exception{
+    public void sendMessage(ActionEvent actionEvent) throws Exception {
 
-        String s = textFieldPassword.getText()+" "+textFieldUser.getText();
+        String s = textFieldPassword.getText() + " " + textFieldUser.getText();
         TextDataMessage textMessage = new TextDataMessage(s);
         System.out.println("1");
-        obOut = new ObjectOutputStream(socket.getOutputStream());
+        //obOut = new ObjectOutputStream(socket.getOutputStream());
         System.out.println("2");
         obOut.writeObject(textMessage);
         obOut.flush();
         System.out.println("3");
-        obOut.close();
 
     }
 
