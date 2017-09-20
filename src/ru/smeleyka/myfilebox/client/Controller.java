@@ -17,12 +17,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 
-public class Controller implements Initializable{
+public class Controller{
     private static final String SERVER_IP = "127.0.0.1";
     private static final int SERVER_PORT = 2017;
-    public Button receiveButton;
-    public Button sendButton;
-    public Button openFileButton;
     private Socket socket;
     private OutputStreamWriter os;
     private InputStreamReader is;
@@ -33,19 +30,20 @@ public class Controller implements Initializable{
     @FXML
     public TextField textFieldPassword;
     @FXML
-    private Button loginButton;
-    @FXML
     private TextArea textArea;
 
 
     public void initialize() {
-//        try {
-//            socket = new Socket(SERVER_IP, SERVER_PORT);
-//            obIn = new ObjectInputStream(socket.getInputStream());
-//            obOut = new ObjectOutputStream(socket.getOutputStream());
-//
-//            System.out.println("Before Thread");
-//
+        System.out.println("Controller");
+        try {
+            socket = new Socket(SERVER_IP, SERVER_PORT);
+            //obIn = new ObjectInputStream(socket.getInputStream());
+            //obOut = new ObjectOutputStream(socket.getOutputStream());
+            DataInputStream dis = new DataInputStream(socket.getInputStream());
+            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+
+            System.out.println("Before Thread");
+
 //            new Thread(new Runnable() {
 //                @Override
 //                public void run() {
@@ -65,13 +63,13 @@ public class Controller implements Initializable{
 //
 //                }
 //            }).start();
-//            System.out.println("Thread Started");
-//
-//
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+            System.out.println("Thread Started");
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void loginAction() throws Exception {
@@ -90,10 +88,16 @@ public class Controller implements Initializable{
     }
 
     public void sendMessage(ActionEvent actionEvent) throws Exception{
+
         String s = textFieldPassword.getText()+" "+textFieldUser.getText();
         TextDataMessage textMessage = new TextDataMessage(s);
+        System.out.println("1");
+        obOut = new ObjectOutputStream(socket.getOutputStream());
+        System.out.println("2");
         obOut.writeObject(textMessage);
         obOut.flush();
+        System.out.println("3");
+        obOut.close();
 
     }
 
@@ -108,42 +112,5 @@ public class Controller implements Initializable{
 
         System.out.println(file.getAbsoluteFile());
         System.out.println(file.hashCode());
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        try {
-            socket = new Socket(SERVER_IP, SERVER_PORT);
-            obIn = new ObjectInputStream(socket.getInputStream());
-            obOut = new ObjectOutputStream(socket.getOutputStream());
-
-            System.out.println("Before Thread");
-
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("Thread");
-                    BufferedReader br = null;
-                    try {
-                        br = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                        while (true) {
-                            String s = br.readLine();
-                            if (s != null) {
-                                textArea.appendText(s + "\n");
-                            }
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }).start();
-            System.out.println("Thread Started");
-
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

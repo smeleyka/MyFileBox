@@ -22,7 +22,6 @@ public class ClientHandler implements Runnable {
     public ClientHandler(Server server,Socket socket) throws Exception{
         this.socket = socket;
         this.server = server;
-        obIn = new ObjectInputStream(socket.getInputStream());
         obOut = new ObjectOutputStream(socket.getOutputStream());
     }
 
@@ -31,8 +30,10 @@ public class ClientHandler implements Runnable {
         System.out.printf("Client Handler Started");
         while (true){
             try {
+                obIn = new ObjectInputStream(socket.getInputStream());
                 Object obj = obIn.readObject();
                 messageHandler(obj);
+                obIn.available();
 
 
 

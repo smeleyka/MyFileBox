@@ -15,11 +15,14 @@ public class Main extends Application {
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
+        System.out.println("Main");
 
     }
 
 
     public static void main(String[] args) {
+        System.out.println("SPVM");
         launch(args);
+        System.out.println("After Launch");
     }
 }
