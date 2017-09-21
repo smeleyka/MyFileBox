@@ -1,19 +1,26 @@
 package ru.smeleyka.myfilebox.shared_classes;
 
 
+import java.util.UUID;
+
 /**
  * Created by smele on 17.09.2017.
  */
 public class AuthMessage extends AbstractMessage{
+    private UUID sessionId;
     private String login;
     private String password;
     private boolean isAuthorised;
-    private int sessionId;
 
-    public AuthMessage(String login, String password, boolean isAuthorised) {
+    private AuthMessage(String login, String password) {
         this.login = login;
         this.password = password;
-        this.isAuthorised = isAuthorised;
+        this.sessionId = null;
+    }
+    public AuthMessage(String login, String password,UUID sessionId) {
+        this.login = login;
+        this.password = password;
+        this.sessionId = sessionId;
     }
 
     public String getLogin() {
@@ -32,11 +39,11 @@ public class AuthMessage extends AbstractMessage{
         this.password = password;
     }
 
-    public boolean isAuthorised() {
-        return isAuthorised;
+    public UUID getSessionId() {
+        return sessionId;
     }
 
-    public void setAuthorised(boolean authorised) {
-        isAuthorised = authorised;
+    public void setSessionId(UUID sessionId) {
+        this.sessionId = sessionId;
     }
 }

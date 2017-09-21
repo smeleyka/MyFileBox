@@ -15,14 +15,14 @@ import java.io.*;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 
 public class Controller {
     private static final String SERVER_IP = "127.0.0.1";
     private static final int SERVER_PORT = 2017;
+    private UUID sessionId;
     private Socket socket;
-    private OutputStreamWriter os;
-    private InputStreamReader is;
     private ObjectOutputStream obOut;
     private ObjectInputStream obIn;
     @FXML
@@ -37,10 +37,6 @@ public class Controller {
         System.out.println("Controller");
         try {
             socket = new Socket(SERVER_IP, SERVER_PORT);
-
-//            DataInputStream dis = new DataInputStream(socket.getInputStream());
-//            DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
-
             System.out.println("Before Thread");
 
             new Thread(new Runnable() {
@@ -48,13 +44,16 @@ public class Controller {
                 public void run() {
                     System.out.println("Thread");
                     try {
-                        //obIn = new ObjectInputStream(socket.getInputStream());
+                        obIn = new ObjectInputStream(socket.getInputStream());
                         obOut = new ObjectOutputStream(socket.getOutputStream());
 
                         while (true) {
+                            obIn.readObject();
 
                         }
                     } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
 
