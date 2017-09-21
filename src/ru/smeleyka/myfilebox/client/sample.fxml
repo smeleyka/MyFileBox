@@ -23,7 +23,7 @@
         </HBox>
     </top>
     <center>
-        <TextArea editable="false" promptText="TextArea" fx:id="textArea">
+        <TextArea editable="false" promptText="TextArea" fx:id="textArea" >
 
         </TextArea>
     </center>

@@ -2,61 +2,60 @@ package ru.smeleyka.myfilebox.client;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import ru.smeleyka.myfilebox.shared_classes.AuthMessage;
 import ru.smeleyka.myfilebox.shared_classes.TextDataMessage;
 
 
 import java.io.*;
 import java.net.Socket;
-import java.net.URL;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 
 public class Controller {
     private static final String SERVER_IP = "127.0.0.1";
     private static final int SERVER_PORT = 2017;
-    private UUID sessionId;
-    private Socket socket;
-    private ObjectOutputStream obOut;
-    private ObjectInputStream obIn;
+    private static final String LOGIN = "test";
+    private static final String PASS = "pass";
+    private static UUID sessionId = null;
+    private static Socket socket;
+    private static ObjectOutputStream obOut;
+    private static ObjectInputStream obIn;
     @FXML
     public TextField textFieldUser;
     @FXML
     public TextField textFieldPassword;
     @FXML
-    private TextArea textArea;
+    public TextArea textArea;
+    public Button loginButton;
 
 
     public void initialize() {
         System.out.println("Controller");
         try {
-            socket = new Socket(SERVER_IP, SERVER_PORT);
             System.out.println("Before Thread");
+            socket = new Socket(SERVER_IP, SERVER_PORT);
+            obIn = new ObjectInputStream(socket.getInputStream());
+            obOut = new ObjectOutputStream(socket.getOutputStream());
 
             new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("Thread");
                     try {
-                        obIn = new ObjectInputStream(socket.getInputStream());
-                        obOut = new ObjectOutputStream(socket.getOutputStream());
-
+                        System.out.println("Thread");
                         while (true) {
-                            obIn.readObject();
 
+                            messageHandler(obIn.readObject());
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
                         e.printStackTrace();
                     }
-
                 }
             }).start();
             System.out.println("Thread Started");
@@ -68,17 +67,30 @@ public class Controller {
     }
 
     public void loginAction() throws Exception {
-        os = new OutputStreamWriter(socket.getOutputStream());
-        os.write(textFieldUser.getText() + "\n");
-        os.flush();
-        textFieldUser.clear();
-        textFieldUser.getCursor();
-
-
+        String login = textFieldUser.getText();
+        String pass = textFieldPassword.getText();
+        AuthMessage authMessage = new AuthMessage(login,pass);
+        obOut.writeObject(authMessage);
+        obOut.flush();
     }
 
     public void recieveMessage(ActionEvent actionEvent) throws Exception {
 
+
+    }
+
+    public void messageHandler(Object obj) {
+        if (obj instanceof AuthMessage) {
+            AuthMessage authMessage = (AuthMessage)obj;
+            if (authMessage.getSessionId()!=null){
+                textFieldUser.setVisible(false);
+                textFieldPassword.setVisible(false);
+                loginButton.setVisible(false);
+            }
+        }
+        if (obj instanceof TextDataMessage) {
+
+        }
 
     }
 

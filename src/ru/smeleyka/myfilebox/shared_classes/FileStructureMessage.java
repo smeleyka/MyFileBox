@@ -1,10 +1,12 @@
 package ru.smeleyka.myfilebox.shared_classes;
 
+import java.util.UUID;
+
 /**
  * Created by smele on 17.09.2017.
  */
 public class FileStructureMessage extends AbstractMessage {
-
+    private UUID sessionId;
     private String [] structureArr;
 
     public FileStructureMessage(String[] structureArr) {

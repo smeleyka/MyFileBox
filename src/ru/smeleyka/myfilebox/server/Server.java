@@ -12,6 +12,8 @@ public class Server {
     private static final int SERVER_PORT = 2017;
     private static Vector <ClientHandler> clients;
     public Server() {
+        AuthorizeService.addLoginPass("test","pass");
+        clients = new Vector<>();
 
         try {
             ServerSocket serverSocket = new ServerSocket(SERVER_PORT);

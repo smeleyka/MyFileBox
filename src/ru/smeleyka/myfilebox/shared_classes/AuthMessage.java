@@ -10,9 +10,8 @@ public class AuthMessage extends AbstractMessage{
     private UUID sessionId;
     private String login;
     private String password;
-    private boolean isAuthorised;
 
-    private AuthMessage(String login, String password) {
+    public AuthMessage(String login, String password) {
         this.login = login;
         this.password = password;
         this.sessionId = null;

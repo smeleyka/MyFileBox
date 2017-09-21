@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.UUID;
 
 /**
  * Created by smele on 18.09.2017.
@@ -18,6 +19,7 @@ public class ClientHandler implements Runnable {
     private ObjectInputStream obIn;
     private ObjectOutputStream obOut;
     private AbstractMessage mess;
+    private UUID sessionId;
 
 
     public ClientHandler(Server server, Socket socket) throws Exception {
@@ -29,7 +31,7 @@ public class ClientHandler implements Runnable {
 
     @Override
     public void run() {
-        System.out.printf("Client Handler Started");
+        System.out.println("Client Handler Started");
         try {
             while (true) {
 
@@ -54,8 +56,20 @@ public class ClientHandler implements Runnable {
 
     public void messageHandler(Object obj) {
         if (obj instanceof AuthMessage) {
-            AuthMessage authMessage = (TextDataMessage) obj;
-            System.out.println(authMessage.getCommand());
+            AuthMessage authMessage = (AuthMessage) obj;
+            authMessage = AuthorizeService.authorize(authMessage);
+            this.sessionId=authMessage.getSessionId();
+            if (this.sessionId!=null){
+                System.out.println("Client Authorized");
+                server.clientsAdd(this);
+            }
+            try {
+                obOut.writeObject(authMessage);
+                obOut.flush();
+                System.out.println("Auth Message Answer");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         if (obj instanceof TextDataMessage) {
             TextDataMessage textMessage = (TextDataMessage) obj;
