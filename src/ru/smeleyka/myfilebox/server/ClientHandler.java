@@ -73,6 +73,7 @@ public class ClientHandler implements Runnable {
         }
         if (obj instanceof TextDataMessage) {
             TextDataMessage textMessage = (TextDataMessage) obj;
+            System.out.print(textMessage.getSessionId().toString()+" - ");
             System.out.println(textMessage.getCommand());
         }
 

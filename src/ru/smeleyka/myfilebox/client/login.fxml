@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<VBox alignment="CENTER"
+      fillWidth="false"
+      prefHeight="300.0"
+      prefWidth="500.0"
+      scaleShape="false"
+      xmlns="http://javafx.com/javafx/8.0.111"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ru.smeleyka.myfilebox.client.LoginController">
+
+    <Text text="Welcome to MyDropBox">
+<VBox.margin>
+    <Insets bottom="40.0"/>
+</VBox.margin>
+        <font>
+            <Font size="33.0"/>
+        </font>
+    </Text>
+
+    <TextField prefWidth="250.0" promptText="Login" fx:id="loginField">
+        <VBox.margin>
+            <Insets bottom="5.0" top="5.0"/>
+        </VBox.margin>
+    </TextField>
+
+    <TextField prefWidth="250.0" promptText="Password" fx:id="passwordField">
+        <VBox.margin>
+            <Insets bottom="5.0" top="5.0"/>
+        </VBox.margin>
+    </TextField>
+
+    <Button text="Login" onAction="#startLogin">
+        <VBox.margin>
+            <Insets bottom="5.0" top="5.0"/>
+        </VBox.margin>
+    </Button>
+
+    <padding>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+    </padding>
+</VBox>

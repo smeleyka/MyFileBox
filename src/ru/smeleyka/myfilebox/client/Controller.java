@@ -83,6 +83,7 @@ public class Controller {
         if (obj instanceof AuthMessage) {
             AuthMessage authMessage = (AuthMessage)obj;
             if (authMessage.getSessionId()!=null){
+                sessionId = authMessage.getSessionId();
                 textFieldUser.setVisible(false);
                 textFieldPassword.setVisible(false);
                 loginButton.setVisible(false);
@@ -97,7 +98,7 @@ public class Controller {
     public void sendMessage(ActionEvent actionEvent) throws Exception {
 
         String s = textFieldPassword.getText() + " " + textFieldUser.getText();
-        TextDataMessage textMessage = new TextDataMessage(s);
+        TextDataMessage textMessage = new TextDataMessage(sessionId,s);
         System.out.println("1");
         //obOut = new ObjectOutputStream(socket.getOutputStream());
         System.out.println("2");
