@@ -16,14 +16,8 @@ import java.net.Socket;
 import java.util.UUID;
 
 
-public class Controller {
-    private static final String SERVER_IP = "127.0.0.1";
-    private static final int SERVER_PORT = 2017;
-    private static final String LOGIN = "test";
-    private static final String PASS = "pass";
-    private static UUID sessionId = null;
-    private static Socket socket;
-    private static ObjectOutputStream obOut;
+public class MainController {
+       private static ObjectOutputStream obOut;
     private static ObjectInputStream obIn;
     @FXML
     public TextField textFieldUser;
@@ -35,12 +29,12 @@ public class Controller {
 
 
     public void initialize() {
-        System.out.println("Controller");
+        System.out.println("MainController");
         try {
             System.out.println("Before Thread");
-            socket = new Socket(SERVER_IP, SERVER_PORT);
-            obIn = new ObjectInputStream(socket.getInputStream());
-            obOut = new ObjectOutputStream(socket.getOutputStream());
+
+            obIn = GlobalData.getObIn();
+            obOut = GlobalData.getObOut();
 
             new Thread(new Runnable() {
                 @Override
