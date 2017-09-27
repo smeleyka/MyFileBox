@@ -30,7 +30,7 @@ public class MainController {
 
     public void initialize() {
         System.out.println("MainController");
-        try {
+
             System.out.println("Before Thread");
 
             obIn = GlobalData.getObIn();
@@ -55,9 +55,7 @@ public class MainController {
             System.out.println("Thread Started");
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     public void loginAction() throws Exception {
@@ -77,7 +75,7 @@ public class MainController {
         if (obj instanceof AuthMessage) {
             AuthMessage authMessage = (AuthMessage)obj;
             if (authMessage.getSessionId()!=null){
-                sessionId = authMessage.getSessionId();
+                GlobalData.setSessionId(authMessage.getSessionId());
                 textFieldUser.setVisible(false);
                 textFieldPassword.setVisible(false);
                 loginButton.setVisible(false);
@@ -92,7 +90,7 @@ public class MainController {
     public void sendMessage(ActionEvent actionEvent) throws Exception {
 
         String s = textFieldPassword.getText() + " " + textFieldUser.getText();
-        TextDataMessage textMessage = new TextDataMessage(sessionId,s);
+        TextDataMessage textMessage = new TextDataMessage(GlobalData.getSessionId(),s);
         System.out.println("1");
         //obOut = new ObjectOutputStream(socket.getOutputStream());
         System.out.println("2");

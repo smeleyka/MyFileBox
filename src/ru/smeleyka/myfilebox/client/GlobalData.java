@@ -12,8 +12,8 @@ import java.util.UUID;
  * Created by smeleyka on 26.09.17.
  */
 public class GlobalData {
-    private static final String SERVER_IP = "127.0.0.1";
-    private static final int SERVER_PORT = 2017;
+     private static final String SERVER_IP = "127.0.0.1";
+     private static final int SERVER_PORT = 2017;
     private static final String LOGIN = "test";
     private static final String PASS = "pass";
     private static Stage stage;
@@ -21,13 +21,6 @@ public class GlobalData {
     private static Socket socket;
     private static ObjectOutputStream obOut;
     private static ObjectInputStream obIn;
-
-
-    public GlobalData() throws IOException {
-        this.socket = new Socket(SERVER_IP, SERVER_PORT);
-        this.obIn = new ObjectInputStream(GlobalData.getSocket().getInputStream());
-        this.obOut = new ObjectOutputStream(GlobalData.getSocket().getOutputStream());
-    }
 
     public static UUID getSessionId() {
         return sessionId;
@@ -67,5 +60,13 @@ public class GlobalData {
 
     public static void setObIn(ObjectInputStream obIn) {
         GlobalData.obIn = obIn;
+    }
+
+    public static String getServerIp() {
+        return SERVER_IP;
+    }
+
+    public static int getServerPort() {
+        return SERVER_PORT;
     }
 }
