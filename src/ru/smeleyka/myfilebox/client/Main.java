@@ -23,7 +23,7 @@ public class Main extends Application {
         window.setScene(new Scene(root, 600, 400));
         window.setResizable(false);
         window.show();
- long lines = Files.lines()
+ //long lines = Files.lines()
 
     }
 
