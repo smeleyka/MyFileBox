@@ -12,8 +12,8 @@ import java.util.UUID;
  * Created by smeleyka on 26.09.17.
  */
 public class GlobalData {
-     private static final String SERVER_IP = "127.0.0.1";
-     private static final int SERVER_PORT = 2017;
+    private static final String SERVER_IP = "127.0.0.1";
+    private static final int SERVER_PORT = 2017;
     private static final String LOGIN = "test";
     private static final String PASS = "pass";
     private static Stage stage;

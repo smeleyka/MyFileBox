@@ -27,7 +27,6 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
     public void clientsAdd(ClientHandler client){
         clients.add(client);

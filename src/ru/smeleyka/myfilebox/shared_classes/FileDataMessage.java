@@ -1,43 +1,39 @@
 package ru.smeleyka.myfilebox.shared_classes;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.UUID;
 
 /**
  * Created by smele on 17.09.2017.
  */
-public class FileDataMessage extends AbstractMessage {
-    private UUID sessionId;
+public class FileDataMessage extends AbstractMessage{
     private String fileName;
-    private int fileSize;
+    private long fileSize;
     private byte[] fileData;
 
-    public FileDataMessage(String fileName, int fileSize, byte[] fileData) {
+    public FileDataMessage(String fileName, long fileSize, byte[] fileData) {
         this.fileName = fileName;
         this.fileSize = fileSize;
         this.fileData = fileData;
+    }
+
+    public FileDataMessage(Path file) throws Exception{
+        this.fileName = file.getFileName().toString();
+        this.fileSize = file.toFile().length();
+        this.fileData = Files.readAllBytes(file);
     }
 
     public String getFileName() {
         return fileName;
     }
 
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public int getFileSize() {
+    public long getFileSize() {
         return fileSize;
-    }
-
-    public void setFileSize(int fileSize) {
-        this.fileSize = fileSize;
     }
 
     public byte[] getFileData() {
         return fileData;
     }
 
-    public void setFileData(byte[] fileData) {
-        this.fileData = fileData;
-    }
 }

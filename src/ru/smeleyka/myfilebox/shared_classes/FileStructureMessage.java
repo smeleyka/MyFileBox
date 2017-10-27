@@ -6,7 +6,6 @@ import java.util.UUID;
  * Created by smele on 17.09.2017.
  */
 public class FileStructureMessage extends AbstractMessage {
-    private UUID sessionId;
     private String [] structureArr;
 
     public FileStructureMessage(String[] structureArr) {
@@ -20,4 +19,5 @@ public class FileStructureMessage extends AbstractMessage {
     public void setStructureArr(String[] structureArr) {
         this.structureArr = structureArr;
     }
+
 }

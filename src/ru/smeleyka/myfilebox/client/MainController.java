@@ -8,12 +8,13 @@ import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import ru.smeleyka.myfilebox.shared_classes.AuthMessage;
+import ru.smeleyka.myfilebox.shared_classes.FileDataMessage;
 import ru.smeleyka.myfilebox.shared_classes.TextDataMessage;
 
 
 import java.io.*;
-import java.net.Socket;
-import java.util.UUID;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 
 public class MainController {
@@ -53,7 +54,6 @@ public class MainController {
                 }
             }).start();
             System.out.println("Thread Started");
-
 
 
     }
@@ -107,9 +107,24 @@ public class MainController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         file = fileChooser.showOpenDialog(stage);
+        try {
+        if (file !=null && file.exists()) {
+            Path pFile = file.toPath();
+            byte[] byteFile = Files.readAllBytes(pFile);
+            System.out.println(pFile.getFileName());
+
+            //MessageService.sendMessage(new FileDataMessage(pFile.getFileName()))
+        }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
 
-        System.out.println(file.getAbsoluteFile());
-        System.out.println(file.hashCode());
-    }
+        }
+
+
+
+        //System.out.println(file.getAbsoluteFile());
+        //System.out.println(file.hashCode());
+
 }
