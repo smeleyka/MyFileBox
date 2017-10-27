@@ -56,8 +56,8 @@ public class ClientHandler implements Runnable {
 
     public void messageHandler(Object obj) {
         if (obj instanceof AuthMessage) {
-            AuthMessage clientMessage = (AuthMessage) obj;
-            authMessage = AuthorizeService.authorize(clientMessage);
+            AuthMessage authMessage = (AuthMessage) obj;
+            authMessage = AuthorizeService.authorize(authMessage);
             this.sessionId=authMessage.getSessionId();
             if (this.sessionId!=null){
                 System.out.println("Client Authorized");
