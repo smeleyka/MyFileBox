@@ -35,7 +35,7 @@ public class ClientHandler implements Runnable {
         try {
             while (true) {
 
-                Object obj = obIn.readObject();
+                AbstractMessage obj = (AbstractMessage) obIn.readObject();
                 messageHandler(obj);
 
             }
@@ -54,9 +54,9 @@ public class ClientHandler implements Runnable {
 
     }
 
-    public void messageHandler(Object obj) {
-        if (obj instanceof AuthMessage) {
-            AuthMessage authMessage = (AuthMessage) obj;
+    public <T extends AbstractMessage> void messageHandler(T msg) {
+        if (msg instanceof AuthMessage) {
+            AuthMessage authMessage = (AuthMessage) msg;
             authMessage = AuthorizeService.authorize(authMessage);
             this.sessionId=authMessage.getSessionId();
             if (this.sessionId!=null){
@@ -71,8 +71,8 @@ public class ClientHandler implements Runnable {
                 e.printStackTrace();
             }
         }
-        if (obj instanceof TextDataMessage) {
-            TextDataMessage textMessage = (TextDataMessage) obj;
+        if (msg instanceof TextDataMessage) {
+            TextDataMessage textMessage = (TextDataMessage) msg;
             System.out.print(textMessage.getSessionId().toString()+" - ");
             System.out.println(textMessage.getCommand());
         }

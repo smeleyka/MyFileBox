@@ -1,6 +1,5 @@
 package ru.smeleyka.myfilebox.shared_classes;
 
-
 import java.util.UUID;
 
 /**
